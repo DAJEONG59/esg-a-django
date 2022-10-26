@@ -1,0 +1,39 @@
+[1mdiff --git a/blog/models.py b/blog/models.py[m
+[1mindex 0bb324d..95a9b1c 100644[m
+[1m--- a/blog/models.py[m
+[1m+++ b/blog/models.py[m
+[36m@@ -9,7 +9,12 @@[m [mfrom django.db import models[m
+ class Post(models.Model):[m
+     title = models.CharField(max_length=30)[m
+     content = models.TextField()[m
+[31m-    created_at = models.DateTimeField()[m
+[32m+[m[32m    created_at = models.DateTimeField(auto_now_add=True)[m
+[32m+[m[32m    updated_at= models.DateTimeField(auto_now=True)[m
+[32m+[m
+[32m+[m[32m    def __str__(self):[m
+[32m+[m[32m        return f"[{self.pk}] {self.title} "[m
+[41m+        [m
+ [m
+     [m
+ [m
+[1mdiff --git a/doit_django_prj/settings.py b/doit_django_prj/settings.py[m
+[1mindex 32917f1..3fab19d 100644[m
+[1m--- a/doit_django_prj/settings.py[m
+[1m+++ b/doit_django_prj/settings.py[m
+[36m@@ -105,13 +105,13 @@[m [mAUTH_PASSWORD_VALIDATORS = [[m
+ # Internationalization[m
+ # https://docs.djangoproject.com/en/4.1/topics/i18n/[m
+ [m
+[31m-LANGUAGE_CODE = "en-us"[m
+[32m+[m[32mLANGUAGE_CODE = "ko-kr"[m
+ [m
+[31m-TIME_ZONE = "UTC"[m
+[32m+[m[32mTIME_ZONE = "Asia/Seoul"[m
+ [m
+ USE_I18N = True[m
+ [m
+[31m-USE_TZ = True[m
+[32m+[m[32mUSE_TZ = False[m
+ [m
+ [m
+ # Static files (CSS, JavaScript, Images)[m
