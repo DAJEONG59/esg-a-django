@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 
 from django.http import HttpResponse
 def root(request):
@@ -26,8 +26,7 @@ from blog import views
 
 urlpatterns = [
     path('', root),
-    path('blog/',views.index),
-    path('blog/<int:pk>/', views.single_post_page), #single_post_page 함수에 꼭 pk인자가 있어야한다. 
-    
+    path('blog/',include('blog.urls'))
+
     path("admin/", admin.site.urls),
 ]
