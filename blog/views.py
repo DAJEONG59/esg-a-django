@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from blog.forms import PostForm
 from blog.models import Post
+from django.views.generic import CreateView
 
 # 장고의 템플릿 시스템
 
@@ -15,3 +17,8 @@ def single_post_page(request, pk): #request 모든 요구에 대한 정보
     return render(request, "blog/single_post_page.html",{
         "post":post,
     })
+
+post_new = CreateView.as_view()
+form_class=PostForm
+model=Post,
+success_url="/blog/",
