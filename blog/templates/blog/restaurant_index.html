@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant</title>
+</head>
+<body>
+    <h1>Restaurant</h1>
+
+    {% for res in restaurant_list %}
+        <h2>
+         <a href ="{{ res.get_absolute_url }}"> <!-- 장고 html에서는()로 함수 호출 불가 -->
+            {{ res.name }}
+         </a>
+        </h2>
+        <h4>{{ res.description }}</h4>
+        <p>{{ res.average_score }}</p>
+    {% endfor %}
+
+    <hr/>
+
+    <a href="/blog/restaurant/new/">새 레스토랑 포스팅 쓰기</a>
+</body>
+</html>

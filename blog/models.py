@@ -1,9 +1,24 @@
-from email import contentmanager
-from turtle import title
-from unittest.util import _MAX_LENGTH
+from django.core.validators import MaxValueValidator
+
+
 from django.db import models
 
+
 # Create your models here.
+
+class Restaurant(models.Model):
+    """맛집"""
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    average_score = models.PositiveSmallIntegerField(
+        validators=[
+            MaxValueValidator(5),
+        ])
+    def get_absolute_url(self): #인자없는 함수, get_absolute_url은 장고에서 정해진 함수
+        return f"/blog/restaurant/{self.pk}/"
+    def __str__(self):
+        return f"[{self.pk}] {self.name} "
+
 
 # post model
 class Post(models.Model):
