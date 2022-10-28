@@ -32,7 +32,7 @@ def post_new(request):
     else:
         form = PostForm(request.POST)
         if form.is_valid(): #유효성 검사 통과하면
-            #유효성 거사에 통과한 값들이 저장된 dict
+            #유효성 검사에 통과한 값들이 저장된 dict
            # form.cleaned_data
            post = form.save() #ModelForm에서 지원
            #return redirect("/blog/")

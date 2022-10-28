@@ -36,7 +36,9 @@ class Post(models.Model):
         return f"[{self.pk}] {self.title} "
         
 
-    
+    class Meta:
+        # 퀘리셋에서 orderby를 지정하지 않았을 때 사용
+        ordering = ['-id']
 
 
 
