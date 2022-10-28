@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django</title>
-</head>
-<body>
-    <h1>Django</h1>
-
+{% extends "blog/base.html" %}
+{% block content %}
     {% for post in post_list %}
         <h2>
          <a href ="{{ post.get_absolute_url }}"> # 장고 html에서는 ()로 함수 호출 불가
@@ -22,5 +13,4 @@
     <hr/>
 
     <a href="/blog/new/">새 포스팅 쓰기</a>
-</body>
-</html>
+{% endblock %}
