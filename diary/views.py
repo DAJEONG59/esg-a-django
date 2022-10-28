@@ -34,9 +34,6 @@ def diary_post_new(request):
            #return redirect(post.get_absolute_url()) 
            return redirect(diarypost)  #get~ 과 같은 의미
 
-
-
-    
     return render(request, "diary/d_postform.html",{
         "form":form,
     })
