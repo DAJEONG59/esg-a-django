@@ -23,11 +23,11 @@
             <li class="nav-item"><a href="/diary/" class="nav-link">Diary</a></li>
 
             {% if not user.is_authenticated %}
-            <li class="nav-item"><a href="/accounts/signup" class="nav-link">Signup</a></li>
-            <li class="nav-item"><a href="/accounts/login" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="/accounts/signup/" class="nav-link">Signup</a></li>
+            <li class="nav-item"><a href="/accounts/login/" class="nav-link">Login</a></li>
             {% else %}
-            <li class="nav-item"><a href="/accounts/profile" class="nav-link">Profile</a></li>
-            <li class="nav-item"><a href="/accounts/logout" class="nav-link">Logout</a></li>
+            <li class="nav-item"><a href="/accounts/profile/" class="nav-link">Profile</a></li>
+            <li class="nav-item"><a href="/accounts/logout/" class="nav-link">Logout</a></li>
             {% endif %}
 
         </ul>

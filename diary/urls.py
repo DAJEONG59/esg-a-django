@@ -7,7 +7,6 @@ urlpatterns = [
     path('<int:pk>/',views.dsingle_post_page),
     path('new/',views.diary_post_new),
     path("<int:pk>/edit/", views.diary_edit),
-    path("<int:pk>/delete", views.memory_delete),
-
+    path("<int:pk>/delete/", views.memory_delete),
 
 ]
