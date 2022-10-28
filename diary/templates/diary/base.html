@@ -1,0 +1,36 @@
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary</title>
+    {% bootstrap_css%}
+
+</head>
+<body>
+
+{% if message %}
+    <ul>
+    {% for message in messages %}
+        <li>
+
+        {{ message.tags }}
+        {{ message }}
+        </li>
+    {% endfor %}
+   </ul>
+{% endif %}
+    <h1>Diary</h1>
+    {% block content %}{% endblock %}
+
+
+    <hr/>
+    &copy; 2022. Today company.
+
+    {% bootstrap_javascript%}
+
+</body>
+</html>

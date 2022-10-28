@@ -1,9 +1,13 @@
+{% extends "diary/base.html" %}
+{% load django_bootstrap5 %}
+
 <h2> 나의 일기 새로 쓰기 </h2>
 
+{% block content %}
 <form action="" method="post" novalidate>
     {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-    </table>
+    {% bootstrap_form form %}
+
     <input type ="submit"/>
 </form>
+{% endblock %}
