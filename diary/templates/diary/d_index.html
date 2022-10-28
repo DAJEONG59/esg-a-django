@@ -3,6 +3,7 @@
 {% block content %}
 <ul>
     {% for diary in diarypost_list %}
+        <li>
         <h2>
          <a href ="{{ diary.get_absolute_url }}"> 
             {{ diary.title }}
@@ -12,6 +13,7 @@
         <h4>등록 일시{{ diary.created_at }}</h4>
         <h5>수정 일시{{ diary.updated_at }}</h5>
         <p>{{ diary.message }}</p>
+        </li>
     {% endfor %}
 </ul>
     <hr/>
