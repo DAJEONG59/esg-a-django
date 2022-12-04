@@ -9,7 +9,7 @@ urlpatterns = [
 
 
 
-    path('restaurant/',views.restaurant),
+    # path('restaurant/',views.restaurant),
     path('restaurant/<int:pk>/',views.r_post_page),
     path('restaurant/new/',views.r_post_new),
 ]

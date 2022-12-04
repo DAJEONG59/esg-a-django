@@ -1,0 +1,15 @@
+{% extends "diary/base.html" %}
+
+{% block content %}
+    <ul>
+        {% for memory in memory_list %}
+            <li>
+                <a href="/diary/{{ memory.pk }}/">
+                    {{ memory.title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <a href="/diary/new/">New Memory</a>
+{% endblock %}

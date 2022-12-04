@@ -18,12 +18,16 @@ class Restaurant(models.Model):
         return f"/blog/restaurant/{self.pk}/"
     def __str__(self):
         return f"[{self.pk}] {self.name} "
+    class Meta:
+        # 퀘리셋에서 orderby를 지정하지 않았을 때 사용
+        ordering = ['-id']    
 
 
 # post model
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at= models.DateTimeField(auto_now=True)
 

@@ -21,9 +21,9 @@ def diary_post_new(request):
     # print("request.method =", request.method)
     # print("request.POST =", request.POST)
     if request.method == "GET":
-        form = diary_Form()
+        form = diary_Form(instance=memory)
     else:
-        form = diary_Form(request.POST)
+        form = diary_Form(request.POST,instance=memory)
         if form.is_valid(): #유효성 검사 통과하면
             #유효성 거사에 통과한 값들이 저장된 dict
            # form.cleaned_data

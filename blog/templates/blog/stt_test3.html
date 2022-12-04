@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8">
+     <title>Speech to Text</title>
+     <style>
+         body{
+             text-align: center;
+         }
+
+        button{
+             padding: 8px;
+             /*border-radius: 6px;*/
+         }
+         #message {
+             color: #996600;
+         }
+
+        .textWrapper{
+             width: 800px;
+             margin: 0 auto;
+             display: flex;
+             flex-direction: row;
+         }
+         .textbox{
+             height: 100px;
+             border: 1px solid #d3d3d3;
+             flex: 1;
+             margin : 5px 15px;
+             border-radius: 6px;
+             text-align: left;
+             padding: 16px;
+         }
+     </style>
+     <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script> -->
+</head>
+
+<body>
+
+    
+    <h1>Speech to Text Example!!!</h1>
+<form action="" method="post" id="sttform">{% csrf_token %}
+    <button id="speech" onclick="speech_to_text()" type="button">음성으로 텍스트 입력</button>
+     <button id="stop" onclick="stop()"type="button" >멈추기</button>
+     <p id="message">버튼을 누르고 말씀하세요.</p>
+
+    
+    <div class="textWrapper">
+         {% comment %} <div id="korea" class="textbox"></div> {% endcomment %}
+         <h4> title</h4><textarea name="title" id="title" > </textarea><br>
+         <textarea name="content"  id="korea"></textarea>
+
+         {% comment %} <div id="english" class="textbox"></div> {% endcomment %}
+
+     </div>
+
+     <input type="submit" value="제출" />
+    </form>
+    <script type="text/javascript">
+            const content_field = document.querySelector('#stt-form [name=content]');
+            var sttform = document.getElementById("sttform");            
+            var textarea = document.getElementById('textarea');
+            var title = document.getElementById('textarea');
+            var message = document.querySelector("#message");
+            var button = document.querySelector("#speech");
+            var korea = document.querySelector("#korea");
+            var english = document.querySelector("#english");
+            var isRecognizing = false;
+        if ('SpeechRecognition' in window) {
+           // Speech recognition support. Talk to your apps!
+           console.log("음성인식을 지원하는 브라우저입니다.")
+         }
+
+        try {
+             var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+         } catch(e){
+             console.error(e);
+         }
+
+        recognition.lang = 'ko-KR'; //선택하게 해줘야 할듯 .
+         recognition.interimResults = false;
+         recognition.maxAlternatives = 5;
+         //recognition.continuous = true;
+
+
+         function speech_to_text(){
+            
+             recognition.start();
+             korea.innerHTML='말씀하세요...'
+             isRecognizing = true;
+
+            recognition.onstart = function(){
+                 console.log("음성인식이 시작 되었습니다. 이제 마이크에 무슨 말이든 하세요.")
+                 message.innerHTML = "음성인식 시작...";
+                 button.innerHTML = "듣는 중...";
+                 button.disabled = true;
+             }
+            
+
+            recognition.onspeechend = function(){
+                 message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+                 button.disabled = false;
+                 button.innerHTML = "음성으로 텍스트 입력";
+             }
+
+            recognition.onresult = function(e) {
+                 //console.log('You said: ', event.results[0][0].transcript);
+                 // 결과를 출력
+                 //var resText = event.results[0][0].transcript;
+                // korea.innerHTML = resText;
+                console.log(e.results);
+                 // disable_stt();
+
+                // 매 result 반환 시마다 e.results의 개수가 늘어납니다.
+                const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(speech => speech.transcript)
+                .join(' ');
+
+                console.log("transcript :", transcript);
+                content_field.value = content_field_value + " " + transcript;
+
+
+                //text to sppech
+                 text_to_speech(resText);
+                
+             };
+
+            recognition.onend = function(){
+                 message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+                 button.disabled = false;
+                 button.innerHTML = "음성으로 텍스트 입력";
+                 isRecognizing = false;
+
+            }
+         }
+
+        function stop(){
+             recognition.stop();
+             message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+             button.disabled = false;
+             button.innerHTML = "Start STT";
+             isRecognizing = false;
+         }
+
+
+
+        // Text to speech
+         function text_to_speech(txt){
+             // Web Speech API - speech synthesis
+             
+
+            msg.onend = function(e) {
+                 if(isRecognizing == false){
+                     recognition.start();   
+                 }
+                   console.log('Finished in ' + event.elapsedTime + ' seconds.');
+             };
+             window.speechSynthesis.speak(msg);
+         }
+
+    </script>
+
+</body>
+</html>

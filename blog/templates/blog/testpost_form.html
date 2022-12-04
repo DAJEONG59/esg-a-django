@@ -1,0 +1,129 @@
+{% extends "blog/base.html" %}
+{% load django_bootstrap5 %}
+
+
+{% block content %}
+<h2> 새 포스팅 쓰기 </h2>
+
+<form action="" method="post" >
+    {% csrf_token %}
+    {% comment %} <textarea type="text"
+                                      class="form-control"
+                                      name="content"
+                                      rows="6"
+                                      data-form-field="Message"
+                                      maxlength="50"
+                                      id="content"
+                            style="border: 4px solid rgb(255, 145, 130);
+                              border-radius: 8px;
+                              background-color: #f8f8f8;
+                              outline-color: #FE6B8B;
+                              padding: 5px 5px;
+                              font-size: 30px;
+                              resize: none;font-family: 'KyoboHandwriting2020A';" required
+                            >{% if form.instance.pk %}{{ form.instance.content}}{% endif %}</textarea>
+    <input type ="submit" /> {% endcomment %}
+    
+   {% comment %} <textarea name="content"></textarea> {% endcomment %}
+   <button id="speech" onclick="speech_to_text()">Start STT</button>
+     <button id="stop" onclick="stop()">Stop</button>
+     <p id="message">버튼을 누르고 아무말이나 하세요.</p>
+
+    <div class="textWrapper">
+         {% comment %} <div id="korea" class="textbox"></div> {% endcomment %}
+          <textarea name="content" id="korea">     </textarea>
+
+         <div id="english" class="textbox"></div>
+   <input type ="submit" />
+</form>
+<script type="text/javascript">
+
+    var message = document.querySelector("#message");
+     var button = document.querySelector("#speech");
+     var korea = document.querySelector("#korea");
+     var english = document.querySelector("#english");
+     var isRecognizing = false;
+
+    if ('SpeechRecognition' in window) {
+       // Speech recognition support. Talk to your apps!
+       console.log("음성인식을 지원하는 브라우저입니다.")
+     }
+
+    try {
+         var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+     } catch(e){
+         console.error(e);
+     }
+
+    recognition.lang = 'ko-KR'; //선택하게 해줘야 할듯 .
+     recognition.interimResults = false;
+     recognition.maxAlternatives = 5;
+     //recognition.continuous = true;
+
+
+     function speech_to_text(){
+        
+         recognition.start();
+         isRecognizing = true;
+
+        recognition.onstart = function(){
+             console.log("음성인식이 시작 되었습니다. 이제 마이크에 무슨 말이든 하세요.")
+             message.innerHTML = "음성인식 시작...";
+             
+             button.innerHTML = "Listening...";
+             button.disabled = true;
+         }
+        
+
+        recognition.onspeechend = function(){
+             message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+             button.disabled = false;
+             button.innerHTML = "Start STT";
+         }
+
+        recognition.onresult = function(event) {
+             console.log('You said: ', event.results[0][0].transcript);
+             // 결과를 출력
+             var resText = event.results[0][0].transcript;
+             korea.innerHTML = resText;
+
+            //text to sppech
+             text_to_speech(resText);
+            
+         };
+
+        recognition.onend = function(){
+             message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+             button.disabled = false;
+             button.innerHTML = "Start STT";
+             isRecognizing = false;
+
+        }
+     }
+
+    function stop(){
+         recognition.stop();
+         message.innerHTML = "버튼을 누르고 아무말이나 하세요.";
+         button.disabled = false;
+         button.innerHTML = "Start STT";
+         isRecognizing = false;
+     }
+
+
+
+    // Text to speech
+     function text_to_speech(txt){
+       
+
+        msg.onend = function(e) {
+             if(isRecognizing == false){
+                 recognition.start();   
+             }
+               console.log('Finished in ' + event.elapsedTime + ' seconds.');
+         };
+         window.speechSynthesis.speak(msg);
+     }
+
+</script>
+
+{% endblock %}

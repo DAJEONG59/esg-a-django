@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html
+
+    <button id="speak">Type to Speak</button>
+
+    <form action="" method="post" id="sttform">{% csrf_token %}
+        
+    <div>
+        
+        {% comment %} <input type="text" name="content" id="textarea" /> {% endcomment %}
+        
+        <textarea name="content" id="textarea">     </textarea>
+        {% comment %} <p id=""></p> {% endcomment %}
+        <input type ="submit" />
+    </div>
+    </form>
+
+
+<script>
+
+    {% comment %} var speak = document.getElementById('speak'); {% endcomment %}
+    var button = document.querySelector("#speak");
+    speak.addEventListener("click", function () {
+        var sttform = document.getElementById("sttform");
+        
+        var textarea = document.getElementById('textarea');
+    });
+      
+    {% comment %} var textarea = document.getElementById('textarea'); {% endcomment %}
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+    speak.addEventListener('click', function () {
+        recognition.start();
+        textarea.innerHTML = '...speaking';
+    })
+    recognition.onresult = function (e) {
+      
+        document.getElementById(‘textarea’).value= e.results[0][0].transcript;
+        textarea.innerHTML = transcript;
+        document.getElementById(‘sttform’).submit();        
+        
+        };
+
+    recognition.onerror = function (e) {
+            recognition.stop();
+          };
+        
+        
+
+    
+
+</script>
+  {% comment %} var transcript = e.results[0][0].transcript; {% endcomment %}
+</html>
